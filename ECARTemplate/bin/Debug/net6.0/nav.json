@@ -1,19 +1,27 @@
 {
     "lists": [
         {
-            "title": "Gestión ECAR",
+            "title": "Gestión de Credenciales",
             "icon": "fal fa-server",
             "roles": [ "Grupo SGI TI Desarrollo" ],
             "items": [
                 {
-                    "title": "Equipos",
+                    "href": "aspnetcore_welcome.html",
+                    "icon": "fal fa-graduation-cap",
+                    "roles": [ "Grupo SGI TI Desarrollo" ],
+                    "title": "Inicio"
+                },
+                {
                     "href": "/Equipos",
                     "icon": "fal fa-desktop",
-                    "roles": []
+                    "roles": [],
+                    "title": "Gestión de Equipos"
                 }
             ]
         }
+
+
+
     ],
     "version": "4.5"
 }
-

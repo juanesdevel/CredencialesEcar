@@ -10,7 +10,7 @@
 <h1>Equipos ó Software</h1>
 
 <p>
-    <a asp-action="Create">Crear Nuevo</a>
+    <a class="btn btn-primary" asp-action="Create">Crear Nuevo</a>
 </p>
 <table class="table">
     <thead>
@@ -33,9 +33,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Area)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SubArea)
-            </th>
+           
             <th>
                 @Html.DisplayNameFor(model => model.Nota)
             </th>
@@ -44,9 +42,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.UsuarioTiRegistro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaModificacion)
             </th>
             <th></th>
         </tr>
@@ -73,9 +68,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Area)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SubArea)
-                </td>
+              
                 <td>
                     @Html.DisplayFor(modelItem => item.Nota)
                 </td>
@@ -85,9 +78,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.UsuarioTiRegistro)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaModificacion)
-                </td>
+               
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
@@ -118,18 +109,17 @@
                                 '<td>' + equipo.fecha + '</td>' +
                                 '<td>' + equipo.sede + '</td>' +
                                 '<td>' + equipo.area + '</td>' +
-                                '<td>' + equipo.subArea + '</td>' +
                                 '<td>' + equipo.nota + '</td>' +
                                 '<td>' + equipo.estado + '</td>' +
                                 '<td>' + equipo.usuarioTiRegistro + '</td>' +
-                                '<td>' + equipo.fechaModificacion + '</td>' +
+                               // '<td>' + equipo.fechaModificacion + '</td>' +
                                 '<td>' +
                                     '<a href="/Equipos/Edit/' + equipo.id + '">Editar</a> | ' +
                                     '<a href="/Equipos/Details/' + equipo.id + '">Detalles</a> | ';
                             if (equipo.estado === 'Activo') {
-                                row += '<a href="/Equipos/Inactivar/' + equipo.id + '" class="btn btn-warning btn-sm">Inactivar</a>';
+                                row += '<a href="/Equipos/Inactivar/' + equipo.id + '"">Inactivar</a>';
                             } else {
-                                row += '<a href="/Equipos/Activar/' + equipo.id + '" class="btn btn-success btn-sm">Activar</a>';
+                                row += '<a href="/Equipos/Activar/' + equipo.id + '" ">Activar</a>';
                             }
                             row += '</td></tr>';
                             $('tbody').append(row);
