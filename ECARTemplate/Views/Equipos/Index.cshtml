@@ -10,16 +10,22 @@
 <h1>Equipos ó Software</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
+    <a asp-action="Create">Crear Nuevo</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.CodigoEquipo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NombreEquipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Sede)
@@ -28,7 +34,19 @@
                 @Html.DisplayNameFor(model => model.Area)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.SubArea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nota)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioTiRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaModificacion)
             </th>
             <th></th>
         </tr>
@@ -38,10 +56,16 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.CodigoEquipo)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NombreEquipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Sede)
@@ -50,24 +74,30 @@
                     @Html.DisplayFor(modelItem => item.Area)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.SubArea)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nota)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UsuarioTiRegistro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaModificacion)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
-                    @if (item.Estado == "Activo")
-                    {
-                        <a asp-action="Inactivar" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Inactivar</a>
-                    }
-                    else
-                    {
-                        <a asp-action="Activar" asp-route-id="@item.Id" class="btn btn-success btn-sm">Activar</a>
-                    }
+                    <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -82,11 +112,17 @@
                     if (data && data.length > 0) {
                         $.each(data, function (i, equipo) {
                             var row = '<tr>' +
+                                '<td>' + equipo.id + '</td>' + // Asegúrate de que la propiedad sea 'id' (minúscula)
                                 '<td>' + equipo.codigoEquipo + '</td>' +
                                 '<td>' + equipo.nombreEquipo + '</td>' +
+                                '<td>' + equipo.fecha + '</td>' +
                                 '<td>' + equipo.sede + '</td>' +
                                 '<td>' + equipo.area + '</td>' +
+                                '<td>' + equipo.subArea + '</td>' +
+                                '<td>' + equipo.nota + '</td>' +
                                 '<td>' + equipo.estado + '</td>' +
+                                '<td>' + equipo.usuarioTiRegistro + '</td>' +
+                                '<td>' + equipo.fechaModificacion + '</td>' +
                                 '<td>' +
                                     '<a href="/Equipos/Edit/' + equipo.id + '">Editar</a> | ' +
                                     '<a href="/Equipos/Details/' + equipo.id + '">Detalles</a> | ';
@@ -99,7 +135,7 @@
                             $('tbody').append(row);
                         });
                     } else {
-                        $('tbody').append('<tr><td colspan="6">No se encontraron resultados.</td></tr>');
+                        $('tbody').append('<tr><td colspan="11">No se encontraron resultados.</td></tr>'); // Ajusta el colspan
                     }
                 },
                 error: function (error) {

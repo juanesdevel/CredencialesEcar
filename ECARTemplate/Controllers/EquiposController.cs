@@ -201,9 +201,9 @@ namespace ECARTemplate.Controllers
         }
         public async Task<IActionResult> Buscar(string term)
         {
+    
             var equiposFiltrados = await _context.Equipos
                 .Where(e => e.CodigoEquipo.Contains(term) || e.NombreEquipo.Contains(term))
-                .Select(e => new { e.Id, e.CodigoEquipo, e.NombreEquipo, e.Sede, e.Area, e.Estado }) // Selecciona las propiedades necesarias
                 .ToListAsync();
 
             return Json(equiposFiltrados);
