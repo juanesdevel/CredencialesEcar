@@ -99,6 +99,14 @@ namespace ECARTemplate
                     defaults: new { controller = "Equipos" });
                           
             });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                   name: "equipos",
+                    pattern: "Usuarios/{action=Index}/{id?}",
+                    defaults: new { controller = "Usuarios" });
+
+            });
         }
     }
 }

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ECARTemplate.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Usuarios";
+    ViewData["Scripts"] = ""; // Una forma de "ignorar" la sección
+  
+}
+
+<h1>Usuarios</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.CodigoUsuarioEcar)</th>
+            <th>@Html.DisplayNameFor(model => model.NombreUsuario)</th>
+            <th>@Html.DisplayNameFor(model => model.FirmaBpm)</th>
+            <th>@Html.DisplayNameFor(model => model.Cargo)</th>
+            <th>@Html.DisplayNameFor(model => model.Area)</th>
+            <th>@Html.DisplayNameFor(model => model.SubArea)</th>
+            <th>@Html.DisplayNameFor(model => model.Estado)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.CodigoUsuarioEcar)</td>
+                <td>@Html.DisplayFor(modelItem => item.NombreUsuario)</td>
+                <td>@Html.DisplayFor(modelItem => item.FirmaBpm)</td>
+                <td>@Html.DisplayFor(modelItem => item.Cargo)</td>
+                <td>@Html.DisplayFor(modelItem => item.Area)</td>
+                <td>@Html.DisplayFor(modelItem => item.SubArea)</td>
+                <td>@Html.DisplayFor(modelItem => item.Estado)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
