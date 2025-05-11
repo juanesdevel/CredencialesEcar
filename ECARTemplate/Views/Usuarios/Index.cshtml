@@ -2,25 +2,47 @@
 
 @{
     ViewData["Title"] = "Usuarios";
-    ViewData["Scripts"] = ""; // Una forma de "ignorar" la sección
-  
 }
 
 <h1>Usuarios</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
+    <a class="btn btn-primary" asp-action="Create">Crear Nuevo</a>
 </p>
+<div class="mb-3">
+    <input type="text" id="searchInput" class="form-control" placeholder="Buscar por Código o Nombre">
+</div>
+
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.CodigoUsuarioEcar)</th>
-            <th>@Html.DisplayNameFor(model => model.NombreUsuario)</th>
-            <th>@Html.DisplayNameFor(model => model.FirmaBpm)</th>
-            <th>@Html.DisplayNameFor(model => model.Cargo)</th>
-            <th>@Html.DisplayNameFor(model => model.Area)</th>
-            <th>@Html.DisplayNameFor(model => model.SubArea)</th>
-            <th>@Html.DisplayNameFor(model => model.Estado)</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoUsuarioEcar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirmaBpm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cargo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioTiRegistro)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -28,19 +50,81 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.CodigoUsuarioEcar)</td>
-                <td>@Html.DisplayFor(modelItem => item.NombreUsuario)</td>
-                <td>@Html.DisplayFor(modelItem => item.FirmaBpm)</td>
-                <td>@Html.DisplayFor(modelItem => item.Cargo)</td>
-                <td>@Html.DisplayFor(modelItem => item.Area)</td>
-                <td>@Html.DisplayFor(modelItem => item.SubArea)</td>
-                <td>@Html.DisplayFor(modelItem => item.Estado)</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detalles</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Eliminar</a>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodigoUsuarioEcar)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreUsuario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirmaBpm)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cargo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Area)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nota)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UsuarioTiRegistro)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#searchInput').on('input', function () {
+            var searchTerm = $(this).val();
+            $.ajax({
+                url: '@Url.Action("Buscar", "Usuarios")', // Ajusta el controlador a "Usuarios"
+                type: 'GET',
+                data: { term: searchTerm },
+                success: function (data) {
+                    $('tbody').html('');
+                    if (data && data.length > 0) {
+                        $.each(data, function (i, usuario) {
+                            var row = '<tr>' +
+                                '<td>' + usuario.id + '</td>' + // Asegúrate de que la propiedad sea 'id' (minúscula)
+                                '<td>' + usuario.codigoUsuarioEcar + '</td>' +
+                                '<td>' + usuario.nombreUsuario + '</td>' +
+                                '<td>' + usuario.firmaBpm + '</td>' +
+                                '<td>' + usuario.cargo + '</td>' +
+                                '<td>' + usuario.area + '</td>' +
+                                '<td>' + usuario.nota + '</td>' +
+                                '<td>' + usuario.estado + '</td>' +
+                                '<td>' + usuario.usuarioTiRegistro + '</td>' +
+                                '<td>' +
+                                    '<a href="/Usuarios/Edit/' + usuario.id + '">Editar</a> | ' +
+                                    '<a href="/Usuarios/Details/' + usuario.id + '">Detalles</a> | ' +
+                                    '<a href="/Usuarios/Delete/' + usuario.id + '">Eliminar</a>' +
+                                '</td></tr>';
+                            $('tbody').append(row);
+                        });
+                    } else {
+                        $('tbody').append('<tr><td colspan="10">No se encontraron resultados.</td></tr>'); // Ajusta el colspan
+                    }
+                },
+                error: function (error) {
+                    console.error('Error al realizar la búsqueda:', error);
+                }
+            });
+        });
+    });
+</script>

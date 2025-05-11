@@ -65,6 +65,7 @@ namespace ECARTemplate.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            // Si ModelState no es válido, volver a mostrar el formulario con los errores
             return View(usuario);
         }
 
@@ -97,10 +98,11 @@ namespace ECARTemplate.Controllers
             {
                 try
                 {
+                    // Verificar si ya existe otro usuario con el mismo CodigoUsuarioEcar
                     if (await _context.Usuarios.AnyAsync(u => u.CodigoUsuarioEcar == usuario.CodigoUsuarioEcar && u.Id != usuario.Id))
                     {
                         ModelState.AddModelError("CodigoUsuarioEcar", "Ya existe otro usuario con este código.");
-                        return View(usuario);
+                        return View(usuario); // Volver a mostrar el formulario con el error
                     }
 
                     usuario.FechaModificacion = DateTime.Now;
@@ -119,7 +121,7 @@ namespace ECARTemplate.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index)); // Esto debe estar fuera del try-catch
             }
             return View(usuario);
         }
