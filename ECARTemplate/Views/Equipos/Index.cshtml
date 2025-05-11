@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "Equipo ó Software";
 }
+<div class="mb-3">
+    <input type="text" id="searchInput" class="form-control" placeholder="Buscar por Código o Nombre">
+</div>
 
 <h1>Equipos ó Software</h1>
 
@@ -65,3 +68,44 @@
         }
     </tbody>
 </table>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#searchInput').on('input', function () {
+            var searchTerm = $(this).val();
+            $.ajax({
+                url: '@Url.Action("Buscar", "Equipos")', // Utiliza Url.Action aquí
+                type: 'GET',
+                data: { term: searchTerm },
+                success: function (data) {
+                    $('tbody').html('');
+                    if (data && data.length > 0) {
+                        $.each(data, function (i, equipo) {
+                            var row = '<tr>' +
+                                '<td>' + equipo.codigoEquipo + '</td>' +
+                                '<td>' + equipo.nombreEquipo + '</td>' +
+                                '<td>' + equipo.sede + '</td>' +
+                                '<td>' + equipo.area + '</td>' +
+                                '<td>' + equipo.estado + '</td>' +
+                                '<td>' +
+                                    '<a href="/Equipos/Edit/' + equipo.id + '">Editar</a> | ' +
+                                    '<a href="/Equipos/Details/' + equipo.id + '">Detalles</a> | ';
+                            if (equipo.estado === 'Activo') {
+                                row += '<a href="/Equipos/Inactivar/' + equipo.id + '" class="btn btn-warning btn-sm">Inactivar</a>';
+                            } else {
+                                row += '<a href="/Equipos/Activar/' + equipo.id + '" class="btn btn-success btn-sm">Activar</a>';
+                            }
+                            row += '</td></tr>';
+                            $('tbody').append(row);
+                        });
+                    } else {
+                        $('tbody').append('<tr><td colspan="6">No se encontraron resultados.</td></tr>');
+                    }
+                },
+                error: function (error) {
+                    console.error('Error al realizar la búsqueda:', error);
+                }
+            });
+        });
+    });
+</script>

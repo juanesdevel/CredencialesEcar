@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace ECARTemplate.Controllers
 {
@@ -18,9 +19,9 @@ namespace ECARTemplate.Controllers
         }
 
         // GET: Equipos
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Equipos.ToListAsync());
+            return View(new List<Equipo>());
         }
 
         // GET: Equipos/Details/5
@@ -84,7 +85,6 @@ namespace ECARTemplate.Controllers
             return View(equipo);
         }
 
-        // POST: Equipos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,CodigoEquipo,Fecha,NombreEquipo,Sede,Area,SubArea,Nota,Estado,UsuarioTiRegistro")] Equipo equipo)
@@ -98,12 +98,17 @@ namespace ECARTemplate.Controllers
             {
                 try
                 {
-                    // Aquí deberías obtener el nombre del usuario TI actual para la modificación
-                    // equipo.UsuarioTiModificacion = User.Identity.Name;
-                    equipo.FechaModificacion = DateTime.Now;
+                    // Verificar si ya existe otro equipo con el mismo CodigoEquipo
+                    if (await _context.Equipos.AnyAsync(e => e.CodigoEquipo == equipo.CodigoEquipo && e.Id != equipo.Id))
+                    {
+                        ModelState.AddModelError("CodigoEquipo", "Ya existe otro equipo con este código.");
+                        return View(equipo); // Volver a mostrar el formulario con el error
+                    }
 
+                    equipo.FechaModificacion = DateTime.Now;
                     _context.Update(equipo);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,7 +121,7 @@ namespace ECARTemplate.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index)); // Esto debe estar fuera del try-catch
             }
             return View(equipo);
         }
@@ -193,6 +198,15 @@ namespace ECARTemplate.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Buscar(string term)
+        {
+            var equiposFiltrados = await _context.Equipos
+                .Where(e => e.CodigoEquipo.Contains(term) || e.NombreEquipo.Contains(term))
+                .Select(e => new { e.Id, e.CodigoEquipo, e.NombreEquipo, e.Sede, e.Area, e.Estado }) // Selecciona las propiedades necesarias
+                .ToListAsync();
+
+            return Json(equiposFiltrados);
         }
     } 
         }

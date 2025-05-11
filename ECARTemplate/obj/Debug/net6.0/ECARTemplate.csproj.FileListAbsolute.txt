@@ -648,3 +648,4 @@ C:\Users\Juan G\Desktop\ECARTemplate\ECARTemplate\obj\Debug\net6.0\refint\ECARTe
 C:\Users\Juan G\Desktop\ECARTemplate\ECARTemplate\obj\Debug\net6.0\ECARTemplate.pdb
 C:\Users\Juan G\Desktop\ECARTemplate\ECARTemplate\obj\Debug\net6.0\ECARTemplate.genruntimeconfig.cache
 C:\Users\Juan G\Desktop\ECARTemplate\ECARTemplate\obj\Debug\net6.0\ref\ECARTemplate.dll
+C:\Users\Juan G\Desktop\ECARTemplate\ECARTemplate\obj\Debug\net6.0\ECARTemplate.sourcelink.json

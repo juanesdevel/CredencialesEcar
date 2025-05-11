@@ -97,11 +97,7 @@ namespace ECARTemplate
                     name: "equipos",
                     pattern: "Equipos/{action=Index}/{id?}",
                     defaults: new { controller = "Equipos" });
-
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=AspNetCore}/{action=Welcome}");
-                endpoints.MapRazorPages();
+                          
             });
         }
     }
