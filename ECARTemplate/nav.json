@@ -22,6 +22,12 @@
                     "icon": "fal fa-desktop",
                     "roles": [],
                     "title": "Gestión de Usuarios"
+                },
+                {
+                    "href": "/Credenciales",
+                    "icon": "fal fa-desktop",
+                    "roles": [],
+                    "title": "Gestión de Credenciales"
                 }
             ]
         }

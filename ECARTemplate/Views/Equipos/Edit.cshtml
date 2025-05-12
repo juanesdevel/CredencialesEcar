@@ -4,12 +4,12 @@
     ViewData["Title"] = "Editar Equipo";
 }
 
-<h1>Editar Equipo</h1>
 
-<hr />
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-md-4">
         <form asp-action="Edit">
+            <h1>Editar Equipo</h1>
+            <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">

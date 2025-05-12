@@ -4,12 +4,12 @@
     ViewData["Title"] = "Crear Nuevo Equipo";
 }
 
-<h1>Crear Nuevo Equipo</h1>
 
-<hr />
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-md-4">
         <form asp-action="Create">
+            <h1>Crear Nuevo Equipo</h1>
+            <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="CodigoEquipo" class="control-label"></label>

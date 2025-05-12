@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ECARTemplate.Data; // Importa tu ApplicationDbContext
-using ECARTemplate.Models; // Importa tu modelo Usuario
+using ECARTemplate.Data; // Asegúrate de que este sea el namespace correcto para tu ApplicationDbContext
+using ECARTemplate.Models; // Asegúrate de que este sea el namespace correcto para tu modelo Usuario
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
-using System.Collections.Generic;
 
 namespace ECARTemplate.Controllers
 {
@@ -19,9 +18,9 @@ namespace ECARTemplate.Controllers
         }
 
         // GET: Usuarios
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(new List<Usuario>());
+            return View(await _context.Usuarios.ToListAsync());
         }
 
         // GET: Usuarios/Details/5
@@ -51,21 +50,14 @@ namespace ECARTemplate.Controllers
         // POST: Usuarios/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CodigoUsuarioEcar,Fecha,NombreUsuario,FirmaBpm,Cargo,Area,SubArea,Nota,Estado,UsuarioTiRegistro,FechaModificacion")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("Id,CodigoUsuarioEcar,NombreUsuario,FirmaBpm,Cargo,Area,Nota,Estado,UsuarioTiRegistro")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
-                if (await _context.Usuarios.AnyAsync(u => u.CodigoUsuarioEcar == usuario.CodigoUsuarioEcar))
-                {
-                    ModelState.AddModelError("CodigoUsuarioEcar", "Ya existe un usuario con este código.");
-                    return View(usuario);
-                }
-
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            // Si ModelState no es válido, volver a mostrar el formulario con los errores
             return View(usuario);
         }
 
@@ -85,9 +77,10 @@ namespace ECARTemplate.Controllers
             return View(usuario);
         }
 
+        // POST: Usuarios/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CodigoUsuarioEcar,Fecha,NombreUsuario,FirmaBpm,Cargo,Area,SubArea,Nota,Estado,UsuarioTiRegistro,FechaModificacion")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CodigoUsuarioEcar,NombreUsuario,FirmaBpm,Cargo,Area,Nota,Estado,UsuarioTiRegistro")] Usuario usuario)
         {
             if (id != usuario.Id)
             {
@@ -98,17 +91,8 @@ namespace ECARTemplate.Controllers
             {
                 try
                 {
-                    // Verificar si ya existe otro usuario con el mismo CodigoUsuarioEcar
-                    if (await _context.Usuarios.AnyAsync(u => u.CodigoUsuarioEcar == usuario.CodigoUsuarioEcar && u.Id != usuario.Id))
-                    {
-                        ModelState.AddModelError("CodigoUsuarioEcar", "Ya existe otro usuario con este código.");
-                        return View(usuario); // Volver a mostrar el formulario con el error
-                    }
-
-                    usuario.FechaModificacion = DateTime.Now;
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,7 +105,7 @@ namespace ECARTemplate.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index)); // Esto debe estar fuera del try-catch
+                return RedirectToAction(nameof(Index));
             }
             return View(usuario);
         }
@@ -160,13 +144,44 @@ namespace ECARTemplate.Controllers
             return _context.Usuarios.Any(e => e.Id == id);
         }
 
-        public async Task<IActionResult> Buscar(string term)
+        // GET: Usuarios/Activar/5
+        public async Task<IActionResult> Activar(int? id)
         {
-            var usuariosFiltrados = await _context.Usuarios
-                .Where(u => u.CodigoUsuarioEcar.Contains(term) || u.NombreUsuario.Contains(term))
-                .ToListAsync();
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-            return Json(usuariosFiltrados);
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            usuario.Estado = "Activo"; // Asegúrate de que "Activo" coincida con tu modelo
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Usuarios/Inactivar/5
+        public async Task<IActionResult> Inactivar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            usuario.Estado = "Inactivo"; // Asegúrate de que "Inactivo" coincida con tu modelo
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

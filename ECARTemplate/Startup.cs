@@ -102,9 +102,17 @@ namespace ECARTemplate
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                   name: "equipos",
+                   name: "usuarios",
                     pattern: "Usuarios/{action=Index}/{id?}",
                     defaults: new { controller = "Usuarios" });
+
+            });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                   name: "credenciales",
+                    pattern: "Credenciales/{action=Index}/{id?}",
+                    defaults: new { controller = "Credenciales" });
 
             });
         }
