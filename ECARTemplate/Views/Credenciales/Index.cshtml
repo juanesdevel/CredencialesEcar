@@ -6,9 +6,52 @@
 
 <h1>Credenciales</h1>
 
+<div class="card mb-3">
+    <div class="card-header bg-dark text-white">
+        Filtros Avanzados
+    </div>
+    <div class="card-body">
+        <form id="filtrosForm">
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <label for="fechaHora">Fecha y Hora de Creación</label>
+                    <input type="text" class="form-control" id="fechaHora" placeholder="dd/mm/aaaa">
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label for="codigoEquipo">Código del Equipo</label>
+                    <input type="text" class="form-control" id="codigoEquipo" placeholder="Código del Equipo">
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label for="nombreUsuario">Nombre de Usuario</label>
+                    <input type="text" class="form-control" id="nombreUsuario" placeholder="Nombre de Usuario">
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label for="usuarioTiRegistro">Usuario TI (Registro)</label>
+                    <input type="text" class="form-control" id="usuarioTiRegistro" placeholder="Usuario TI (Registro)">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <label for="estado">Estado</label>
+                    <select class="form-control" id="estado">
+                        <option value="">Todos los estados</option>
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select>
+                </div>
+                <div class="col-md-9 text-right">
+                    <button type="button" class="btn btn-primary" onclick="aplicarFiltros()">Aplicar Filtros</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="limpiarFiltros()">Limpiar Filtros</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <p>
     <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -50,18 +93,52 @@
                     @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detalles</a>
                     @if (item.Estado == "Activo")
                     {
-                        <a asp-action="Inactivar" asp-route-id="@item.Id">Inactivar</a>
+                        <a asp-action="Inactivar" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Inactivar</a>
                     }
                     else
                     {
-                        <a asp-action="Activar" asp-route-id="@item.Id">Activar</a>
+                        <a asp-action="Activar" asp-route-id="@item.Id" class="btn btn-sm btn-success">Activar</a>
                     }
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@section ScriptsBlock {
+    <script>
+        function aplicarFiltros() {
+            var fechaHora = document.getElementById("fechaHora").value;
+            var codigoEquipo = document.getElementById("codigoEquipo").value;
+            var nombreUsuario = document.getElementById("nombreUsuario").value;
+            var usuarioTiRegistro = document.getElementById("usuarioTiRegistro").value;
+            var estado = document.getElementById("estado").value;
+
+            // Construir la URL con los parámetros de filtro
+            var url = "/Credenciales/Index?";
+            if (fechaHora) url += "fechaHora=" + encodeURIComponent(fechaHora) + "&";
+            if (codigoEquipo) url += "codigoEquipo=" + encodeURIComponent(codigoEquipo) + "&";
+            if (nombreUsuario) url += "nombreUsuario=" + encodeURIComponent(nombreUsuario) + "&";
+            if (usuarioTiRegistro) url += "usuarioTiRegistro=" + encodeURIComponent(usuarioTiRegistro) + "&";
+            if (estado) url += "estado=" + encodeURIComponent(estado) + "&";
+
+            // Redirigir a la URL con los filtros (esto recargará la página)
+            window.location.href = url;
+        }
+
+        function limpiarFiltros() {
+            document.getElementById("fechaHora").value = "";
+            document.getElementById("codigoEquipo").value = "";
+            document.getElementById("nombreUsuario").value = "";
+            document.getElementById("usuarioTiRegistro").value = "";
+            document.getElementById("estado").value = "";
+
+            // Recargar la página sin filtros
+            window.location.href = "/Credenciales/Index";
+        }
+    </script>
+}

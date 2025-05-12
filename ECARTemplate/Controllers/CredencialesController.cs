@@ -18,9 +18,36 @@ namespace ECARTemplate.Controllers
         }
 
         // GET: Credenciales
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string fechaHora, string codigoEquipo, string nombreUsuario, string usuarioTiRegistro, string estado)
         {
-            return View(await _context.Credenciales.ToListAsync());
+            var credenciales = _context.Credenciales.AsQueryable();
+
+            // Aplicar filtros si se proporcionan valores
+            if (!string.IsNullOrEmpty(fechaHora))
+            {
+                if (DateTime.TryParse(fechaHora, out DateTime fecha))
+                {
+                    credenciales = credenciales.Where(c => c.FechaHora.Value.Date == fecha.Date);
+                }
+            }
+            if (!string.IsNullOrEmpty(codigoEquipo))
+            {
+                credenciales = credenciales.Where(c => c.CodigoEquipo.Contains(codigoEquipo));
+            }
+            if (!string.IsNullOrEmpty(nombreUsuario))
+            {
+                credenciales = credenciales.Where(c => c.NombreUsuario.Contains(nombreUsuario));
+            }
+            if (!string.IsNullOrEmpty(usuarioTiRegistro))
+            {
+                credenciales = credenciales.Where(c => c.UsuarioTiRegistro.Contains(usuarioTiRegistro));
+            }
+            if (!string.IsNullOrEmpty(estado))
+            {
+                credenciales = credenciales.Where(c => c.Estado == estado);
+            }
+
+            return View(await credenciales.ToListAsync());
         }
 
         // GET: Credenciales/Details/5
@@ -126,6 +153,11 @@ namespace ECARTemplate.Controllers
             return View(credencial);
         }
 
+        private bool CredencialExists(int id)
+        {
+            return _context.Credenciales.Any(e => e.Id == id);
+        }
+
         // GET: Credenciales/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -164,6 +196,7 @@ namespace ECARTemplate.Controllers
             }
 
             var credencial = await _context.Credenciales.FindAsync(id);
+
             if (credencial == null)
             {
                 return NotFound();
@@ -174,10 +207,26 @@ namespace ECARTemplate.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        private bool CredencialExists(int id)
+
+        // GET: Credenciales/Inactivar/5
+        public async Task<IActionResult> Inactivar(int? id)
         {
-            return _context.Credenciales.Any(e => e.Id == id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var credencial = await _context.Credenciales.FindAsync(id);
+
+            if (credencial == null)
+            {
+                return NotFound();
+            }
+
+            credencial.Estado = "Inactivo";
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
-        
