@@ -28,6 +28,12 @@
                     "icon": "fal fa-desktop",
                     "roles": [],
                     "title": "Gestión de Credenciales"
+                },
+                {
+                    "href": "/UsuariosTI",
+                    "icon": "fal fa-desktop",
+                    "roles": [],
+                    "title": "Usuarios TI"
                 }
             ]
         }

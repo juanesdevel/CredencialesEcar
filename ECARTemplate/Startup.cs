@@ -69,12 +69,11 @@ namespace ECARTemplate
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint(); // Reemplazo sugerido para manejar errores relacionados con la base de datos en desarrollo.
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -86,34 +85,37 @@ namespace ECARTemplate
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    "default",
-                    "{controller=AspNetCore}/{action=Welcome}");
-                endpoints.MapRazorPages();
-            });
-            app.UseEndpoints(endpoints =>
-            {
+                // Rutas específicas (si las tienes) pueden ir aquí primero
+
+                // Ruta para el controlador de Equipos
                 endpoints.MapControllerRoute(
                     name: "equipos",
                     pattern: "Equipos/{action=Index}/{id?}",
                     defaults: new { controller = "Equipos" });
-                          
-            });
-            app.UseEndpoints(endpoints =>
-            {
+
+                // Ruta para el controlador de Usuarios
                 endpoints.MapControllerRoute(
-                   name: "usuarios",
+                    name: "usuarios",
                     pattern: "Usuarios/{action=Index}/{id?}",
                     defaults: new { controller = "Usuarios" });
 
-            });
-            app.UseEndpoints(endpoints =>
-            {
+                // Ruta para el controlador de Credenciales
                 endpoints.MapControllerRoute(
-                   name: "credenciales",
+                    name: "credenciales",
                     pattern: "Credenciales/{action=Index}/{id?}",
                     defaults: new { controller = "Credenciales" });
 
+                endpoints.MapControllerRoute(
+                    name: "usuariosTI",
+                    pattern: "UsuariosTI/{action=Index}/{id?}", // Cambiado Listar a Index
+                    defaults: new { controller = "UsuariosTI" });
+
+                // Ruta por defecto
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=AspNetCore}/{action=Welcome}/{id?}"); // Añadido el parámetro id?
+
+                endpoints.MapRazorPages();
             });
         }
     }

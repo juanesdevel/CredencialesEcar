@@ -60,6 +60,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlZGVuY2lhbGVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Juan G/Desktop/ECARTemplate/ECARTemplate/Views/Dashboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Juan G/Desktop/ECARTemplate/ECARTemplate/Views/Datatables/Alteditor.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YXRhYmxlc1xBbHRlZGl0b3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -758,6 +762,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Juan G/Desktop/ECARTemplate/ECARTemplate/Views/Ui/TooltipsPopovers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVWlcVG9vbHRpcHNQb3BvdmVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juan G/Desktop/ECARTemplate/ECARTemplate/Views/UsuariosTI/Crear.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NUSVxDcmVhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juan G/Desktop/ECARTemplate/ECARTemplate/Views/UsuariosTI/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NUSVxFZGl0YXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juan G/Desktop/ECARTemplate/ECARTemplate/Views/UsuariosTI/Eliminar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NUSVxFbGltaW5hci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juan G/Desktop/ECARTemplate/ECARTemplate/Views/UsuariosTI/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NUSVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Juan G/Desktop/ECARTemplate/ECARTemplate/Views/Usuarios/Create.cshtml]

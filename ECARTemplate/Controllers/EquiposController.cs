@@ -108,7 +108,6 @@ namespace ECARTemplate.Controllers
                     equipo.FechaModificacion = DateTime.Now;
                     _context.Update(equipo);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,7 +120,7 @@ namespace ECARTemplate.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index)); // Esto debe estar fuera del try-catch
+                return RedirectToAction(nameof(Index)); // Mover fuera del bloque try-catch
             }
             return View(equipo);
         }

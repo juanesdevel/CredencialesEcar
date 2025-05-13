@@ -1,0 +1,75 @@
+﻿@model ECARTemplate.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Panel de Control";
+}
+
+<h1>Panel de Control</h1>
+
+@if (TempData["Mensaje"] != null)
+{
+        <div class="alert alert-info">@TempData["Mensaje"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="container mt-4">
+    <h2>Registros de la Base de Datos</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Registro</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Cantidad de Usuarios</td>
+                <td>@Model.CantidadUsuarios</td>
+            </tr>
+            <tr>
+                <td>Usuarios Activos</td>
+                <td class="text-success">@Model.UsuariosActivos</td>
+            </tr>
+            <tr>
+                <td>Usuarios Inactivos</td>
+                <td class="text-danger">@Model.UsuariosInactivos</td>
+            </tr>
+            <tr>
+                <td>Cantidad de Equipos Creados</td>
+                <td>@Model.CantidadEquiposCreados</td>
+            </tr>
+            <tr>
+                <td>Equipos Activos</td>
+                <td class="text-success">@Model.EquiposActivos</td>
+            </tr>
+            <tr>
+                <td>Equipos Inactivos</td>
+                <td class="text-danger">@Model.EquiposInactivos</td>
+            </tr>
+            <tr>
+                <td>Cantidad de Credenciales Creadas</td>
+                <td>@Model.CantidadCredencialesCreadas</td>
+            </tr>
+            <tr>
+                <td>Credenciales Activas</td>
+                <td class="text-success">@Model.CredencialesActivas</td>
+            </tr>
+            <tr>
+                <td>Credenciales Inactivas</td>
+                <td class="text-danger">@Model.CredencialesInactivas</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form asp-action="GenerarBackup" method="post" class="mt-3">
+        <button type="submit" class="btn btn-primary">Generar y Descargar Backup</button>
+    </form>
+</div>
+
+@section ScriptsBlock {
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}

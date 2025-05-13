@@ -23,7 +23,7 @@ namespace ECARTemplate.Extensions
         {
             var options = new JsonSerializerOptions
             {
-                IgnoreNullValues = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, // Updated to replace IgnoreNullValues
                 WriteIndented = indented,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };

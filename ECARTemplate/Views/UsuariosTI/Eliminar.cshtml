@@ -1,0 +1,45 @@
+﻿@model ECARTemplate.Models.UsuarioTI
+
+@{
+    ViewData["Title"] = "Eliminar Usuario TI";
+}
+
+<h1>Eliminar Usuario TI</h1>
+
+<h3>¿Estás seguro de que quieres eliminar esto?</h3>
+<div>
+    <h4>UsuarioTI</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodigoUsuarioTi)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodigoUsuarioTi)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RolTi)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RolTi)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NombreUsuarioTi)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NombreUsuarioTi)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UsuarioTi)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UsuarioTi)
+        </dd>
+    </dl>
+
+    <form asp-action="Eliminar">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver a la lista</a>
+    </form>
+</div>

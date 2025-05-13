@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace ECARTemplate.Controllers
 {
@@ -18,9 +19,10 @@ namespace ECARTemplate.Controllers
         }
 
         // GET: Usuarios
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Usuarios.ToListAsync());
+            // Pasa una colección vacía a la vista
+            return View(new List<Usuario>());
         }
 
         // GET: Usuarios/Details/5
@@ -182,6 +184,32 @@ namespace ECARTemplate.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+        // GET: Usuarios/Buscar
+        public IActionResult Buscar(string term)
+        {
+            if (string.IsNullOrEmpty(term))
+            {
+                return Json(new List<Usuario>()); // Devuelve una lista vacía si no hay término de búsqueda
+            }
+
+            var resultados = _context.Usuarios
+                .Where(u => u.CodigoUsuarioEcar.Contains(term) || u.NombreUsuario.Contains(term))
+                .Select(u => new
+                {
+                    id = u.Id,
+                    codigoUsuarioEcar = u.CodigoUsuarioEcar,
+                    nombreUsuario = u.NombreUsuario,
+                    firmaBpm = u.FirmaBpm,
+                    cargo = u.Cargo,
+                    area = u.Area,
+                    nota = u.Nota,
+                    estado = u.Estado,
+                    usuarioTiRegistro = u.UsuarioTiRegistro
+                })
+                .ToList();
+
+            return Json(resultados);
         }
     }
 }

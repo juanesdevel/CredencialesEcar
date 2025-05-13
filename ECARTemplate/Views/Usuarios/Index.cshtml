@@ -86,7 +86,7 @@
                     }
                     else
                     {
-                        <a asp-action="Activar" asp-route-id="@item.Id" >Activar</a>
+                        <a asp-action="Activar" asp-route-id="@item.Id">Activar</a>
                     }
                 </td>
             </tr>
@@ -94,44 +94,46 @@
     </tbody>
 </table>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#searchInput').on('input', function () {
-            var searchTerm = $(this).val();
-            $.ajax({
-                url: '@Url.Action("Buscar", "Usuarios")', // Ajusta el controlador a "Usuarios"
-                type: 'GET',
-                data: { term: searchTerm },
-                success: function (data) {
-                    $('tbody').html('');
-                    if (data && data.length > 0) {
-                        $.each(data, function (i, usuario) {
-                            var row = '<tr>' +
-                                '<td>' + usuario.id + '</td>' + // Asegúrate de que la propiedad sea 'id' (minúscula)
-                                '<td>' + usuario.codigoUsuarioEcar + '</td>' +
-                                '<td>' + usuario.nombreUsuario + '</td>' +
-                                '<td>' + usuario.firmaBpm + '</td>' +
-                                '<td>' + usuario.cargo + '</td>' +
-                                '<td>' + usuario.area + '</td>' +
-                                '<td>' + usuario.nota + '</td>' +
-                                '<td>' + usuario.estado + '</td>' +
-                                '<td>' + usuario.usuarioTiRegistro + '</td>' +
-                                '<td>' +
-                                    '<a href="/Usuarios/Edit/' + usuario.id + '">Editar</a> | ' +
-                                    '<a href="/Usuarios/Details/' + usuario.id + '">Detalles</a> | ' +
-                                    '<a href="/Usuarios/Delete/' + usuario.id + '">Eliminar</a>' +
-                                '</td></tr>';
-                            $('tbody').append(row);
-                        });
-                    } else {
-                        $('tbody').append('<tr><td colspan="10">No se encontraron resultados.</td></tr>'); // Ajusta el colspan
+@section ScriptsBlock {
+
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('input', function () {
+                var searchTerm = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("Buscar", "Usuarios")', // Ajusta el controlador a "Usuarios"
+                    type: 'GET',
+                    data: { term: searchTerm },
+                    success: function (data) {
+                        $('tbody').html('');
+                        if (data && data.length > 0) {
+                            $.each(data, function (i, usuario) {
+                                var row = '<tr>' +
+                                    '<td>' + usuario.id + '</td>' + // Asegúrate de que la propiedad sea 'id' (minúscula)
+                                    '<td>' + usuario.codigoUsuarioEcar + '</td>' +
+                                    '<td>' + usuario.nombreUsuario + '</td>' +
+                                    '<td>' + usuario.firmaBpm + '</td>' +
+                                    '<td>' + usuario.cargo + '</td>' +
+                                    '<td>' + usuario.area + '</td>' +
+                                    '<td>' + usuario.nota + '</td>' +
+                                    '<td>' + usuario.estado + '</td>' +
+                                    '<td>' + usuario.usuarioTiRegistro + '</td>' +
+                                    '<td>' +
+                                        '<a href="/Usuarios/Edit/' + usuario.id + '">Editar</a> | ' +
+                                        '<a href="/Usuarios/Details/' + usuario.id + '">Detalles</a> | ' +
+                                        '<a href="/Usuarios/Delete/' + usuario.id + '">Eliminar</a>' +
+                                    '</td></tr>';
+                                $('tbody').append(row);
+                            });
+                        } else {
+                            $('tbody').append('<tr><td colspan="10">No se encontraron resultados.</td></tr>'); // Ajusta el colspan
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error al realizar la búsqueda:', error);
                     }
-                },
-                error: function (error) {
-                    console.error('Error al realizar la búsqueda:', error);
-                }
+                });
             });
         });
-    });
-</script>
+    </script>
+}
