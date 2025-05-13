@@ -1,6 +1,6 @@
 {
     "lists": [
-        {
+         {
             "title": "Gestión de Credenciales",
             "icon": "fal fa-server",
             "roles": [ "Grupo SGI TI Desarrollo" ],
@@ -34,6 +34,12 @@
                     "icon": "fal fa-desktop",
                     "roles": [],
                     "title": "Usuarios TI"
+                },
+                {
+                    "href": "/Dashboard",
+                    "icon": "fal fa-desktop",
+                    "roles": [],
+                    "title": "Dashboard"
                 }
             ]
         }

@@ -110,6 +110,12 @@ namespace ECARTemplate
                     pattern: "UsuariosTI/{action=Index}/{id?}", // Cambiado Listar a Index
                     defaults: new { controller = "UsuariosTI" });
 
+                endpoints.MapControllerRoute(
+                    name: "dashboard",
+                    pattern: "Dashboard/{action=Index}/{id?}",
+                    defaults: new { controller = "Dashboard" });
+
+                endpoints.MapRazorPages();
                 // Ruta por defecto
                 endpoints.MapControllerRoute(
                     name: "default",

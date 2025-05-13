@@ -8,12 +8,12 @@
 
 @if (TempData["Mensaje"] != null)
 {
-        <div class="alert alert-info">@TempData["Mensaje"]</div>
+    <div class="alert alert-info">@TempData["Mensaje"]</div>
 }
 
 @if (TempData["ErrorMessage"] != null)
 {
-        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
 }
 
 <div class="container mt-4">
@@ -27,20 +27,8 @@
         </thead>
         <tbody>
             <tr>
-                <td>Cantidad de Usuarios</td>
-                <td>@Model.CantidadUsuarios</td>
-            </tr>
-            <tr>
-                <td>Usuarios Activos</td>
-                <td class="text-success">@Model.UsuariosActivos</td>
-            </tr>
-            <tr>
-                <td>Usuarios Inactivos</td>
-                <td class="text-danger">@Model.UsuariosInactivos</td>
-            </tr>
-            <tr>
-                <td>Cantidad de Equipos Creados</td>
-                <td>@Model.CantidadEquiposCreados</td>
+                <td>Cantidad de Equipos</td>
+                <td>@Model.TotalEquipos</td>
             </tr>
             <tr>
                 <td>Equipos Activos</td>
@@ -51,8 +39,24 @@
                 <td class="text-danger">@Model.EquiposInactivos</td>
             </tr>
             <tr>
-                <td>Cantidad de Credenciales Creadas</td>
-                <td>@Model.CantidadCredencialesCreadas</td>
+                <td>Cantidad de Usuarios</td>
+                <td>@Model.TotalUsuarios</td>
+            </tr>
+            <tr>
+                <td>Usuarios Activos</td>
+                <td class="text-success">@Model.UsuariosActivos</td>
+            </tr>
+            <tr>
+                <td>Usuarios Inactivos</td>
+                <td class="text-danger">@Model.UsuariosInactivos</td>
+            </tr>
+            <tr>
+                <td>Cantidad de Usuarios TI</td>
+                <td>@Model.TotalUsuariosTI</td>
+            </tr>
+            <tr>
+                <td>Cantidad de Credenciales</td>
+                <td>@Model.TotalCredenciales</td>
             </tr>
             <tr>
                 <td>Credenciales Activas</td>
@@ -71,5 +75,5 @@
 </div>
 
 @section ScriptsBlock {
-            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 }
